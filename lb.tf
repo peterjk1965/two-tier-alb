@@ -56,7 +56,7 @@ resource "aws_lb_target_group_attachment" "web_server_2_attachment" {
   port             = 80
 }
 
-# Step 4: Output the Load Balancer DNS
+# Output the Load Balancer DNS:
 output "load_balancer_dns" {
   value = aws_lb.my_lb.dns_name
 }
