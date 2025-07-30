@@ -15,3 +15,4 @@ In variables.tf, set the ip address of your bastion host, default = "10.0.1.193/
 
 In ec2.tf, comment out the back-end instances if not used
 
+test
