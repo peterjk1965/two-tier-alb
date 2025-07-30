@@ -14,3 +14,11 @@ In variables.tf, create a new key, then change your key name to that key = defau
 In variables.tf, set the ip address of your bastion host, default = "10.0.1.193/32"
 
 In ec2.tf, comment out the back-end instances if not used
+
+Helpful terraform commands:
+terraform init
+terraform fmt
+terraform validate
+terraform plan 
+terraform apply
+terraform state list
