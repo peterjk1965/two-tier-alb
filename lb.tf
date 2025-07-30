@@ -60,3 +60,55 @@ resource "aws_lb_target_group_attachment" "web_server_2_attachment" {
 output "load_balancer_dns" {
   value = aws_lb.my_lb.dns_name
 }
+
+
+# Launch Template: Defines EC2 instance configuration
+resource "aws_launch_template" "example" {
+  name_prefix           = "example-"
+  image_id              = var.ec2-ami               # Your AMI ID variable
+  instance_type         = var.default-instance        # Your instance type variable
+  vpc_security_group_ids = [aws_security_group.allow.id]
+
+  lifecycle {
+    create_before_destroy = true                   # Safe update strategy
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name        = "web-server"
+      Environment = "dev"
+    }
+  }
+}
+
+
+# Auto Scaling Group: Uses the launch template to manage scaling
+resource "aws_autoscaling_group" "example_asg" {
+  name_prefix          = "web-asg-"
+  desired_capacity     = 2
+  min_size             = 1
+  max_size             = 3
+
+  vpc_zone_identifier  = [aws_subnet.public-subnet-a.id, aws_subnet.public-subnet-b.id] 
+
+  launch_template {
+    id      = aws_launch_template.example.id
+    version = "$Latest"
+  }
+
+  health_check_type    = "EC2"
+  termination_policies = ["OldestInstance"]
+
+  tag {
+    key                 = "Name"
+    value               = "example-asg-instance"
+    propagate_at_launch = true
+  }
+
+  tag {
+    key                 = "Environment"
+    value               = "production"
+    propagate_at_launch = true
+  }
+}
