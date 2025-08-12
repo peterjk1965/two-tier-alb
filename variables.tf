@@ -13,9 +13,16 @@ variable "ec2-ami" {
   default = "ami-04985531f48a27ae7"
 }
 
+#moved to main.tf
+# variable "all-ipv4" {
+#   type    = string
+#   default = "0.0.0.0/0"
+# }
+
 variable "all-ipv4" {
-  type    = string
-  default = "0.0.0.0/0"
+  type        = string
+  default     = "0.0.0.0/0"
+  description = "All IPv4 addresses - used for route tables and egress rules"
 }
 
 variable "default-instance" {
@@ -39,5 +46,15 @@ variable "bastion" {
   default = "10.0.1.193/32"
 }
 
+# variable "target_id_a" {
+#   description = "The ID of the target instance"
+#   type        = string
+#   default     = "public-instance-a"
+# }
 
+# variable "target_id_b" {
+#   description = "The ID of the target instance"
+#   type        = string
+#   default     = "public-instance-b"
+# }
 
