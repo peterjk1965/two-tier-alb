@@ -10,7 +10,7 @@ variable "az-2" {
 
 variable "ec2-ami" {
   type    = string
-  default = "ami-04985531f48a27ae7"
+  default = "ami-0169aa51f6faf20d5"
 }
 
 #moved to main.tf
@@ -27,7 +27,7 @@ variable "all-ipv4" {
 
 variable "default-instance" {
   type    = string
-  default = "t2.micro"
+  default = "t3.micro"
 }
 
 # variable "my-ipv4" {
@@ -46,15 +46,15 @@ variable "key-name" {
 #   default = "10.0.1.193/32"
 # }
 
-# variable "target_id_a" {
-#   description = "The ID of the target instance"
-#   type        = string
-#   default     = "public-instance-a"
-# }
+variable "target_id_a" {
+  description = "The ID of the target instance"
+  type        = string
+  default     = "public-instance-a"
+}
 
-# variable "target_id_b" {
-#   description = "The ID of the target instance"
-#   type        = string
-#   default     = "public-instance-b"
-# }
+variable "target_id_b" {
+  description = "The ID of the target instance"
+  type        = string
+  default     = "public-instance-b"
+}
 
