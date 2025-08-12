@@ -140,7 +140,7 @@ resource "aws_autoscaling_group" "web_asg" {
     id      = aws_launch_template.web.id
     version = "$Latest"
   }
-  target_group_arns         = [aws_lb_target_group.main.arn]
+  target_group_arns = [aws_lb_target_group.web_target_group.arn]
 
   tag {
     key                 = "Name"
