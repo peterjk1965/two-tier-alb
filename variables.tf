@@ -30,10 +30,10 @@ variable "default-instance" {
   default = "t2.micro"
 }
 
-variable "my-ipv4" {
-  type    = string
-  default = "24.1.237.243/32"
-}
+# variable "my-ipv4" {
+#   type    = string
+#   default = "24.1.237.243/32"
+# }
 
 variable "key-name" {
   type    = string
@@ -41,10 +41,10 @@ variable "key-name" {
 }
 
 #fix me
-variable "bastion" {
-  type    = string
-  default = "10.0.1.193/32"
-}
+# variable "bastion" {
+#   type    = string
+#   default = "10.0.1.193/32"
+# }
 
 # variable "target_id_a" {
 #   description = "The ID of the target instance"
