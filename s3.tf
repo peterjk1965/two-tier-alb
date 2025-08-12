@@ -1,6 +1,6 @@
 
-resource "aws_s3_bucket" "terraform_state" {
-  bucket = "pjk-terraform-state-bucket"
+resource "aws_s3_bucket" "terraform_state2" {
+  bucket = "pjk-terraform-state-bucket2"
   # Remove server_side_encryption_configuration from here
 
   lifecycle {
@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "terraform_state" {
 }
 
 resource "aws_s3_bucket_versioning" "terraform_state_versioning" {
-  bucket = aws_s3_bucket.terraform_state.id
+  bucket = aws_s3_bucket.terraform_state2.id
 
   versioning_configuration {
     status = "Enabled"
@@ -17,7 +17,7 @@ resource "aws_s3_bucket_versioning" "terraform_state_versioning" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
-  bucket = aws_s3_bucket.terraform_state.id
+  bucket = aws_s3_bucket.terraform_state2.id
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
@@ -36,3 +36,5 @@ resource "aws_dynamodb_table" "terraform_lock" {
     type = "S"
   }
 }
+
+
