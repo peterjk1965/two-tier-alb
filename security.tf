@@ -25,7 +25,7 @@ resource "aws_security_group" "allow" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.bastion]
+    cidr_blocks = [local.my_ip_cidr]
   }
 
   ingress {
