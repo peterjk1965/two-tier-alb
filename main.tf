@@ -5,7 +5,7 @@ terraform {
       version = "4.67.0"
     }
   }
-  
+
   backend "s3" {
     bucket         = "pjk-terraform-state-bucket"
     key            = "terraform.tfstate"
@@ -22,14 +22,7 @@ provider "aws" {
   profile                  = "default"
 }
 
-# Add the IP data source and locals (from previous fix)
-data "http" "my_current_ip" {
-  url = "https://ipv4.icanhazip.com"
-}
 
-locals {
-  my_ip_cidr = "${chomp(data.http.my_current_ip.response_body)}/32"
-}
 
 # 1. Create a custom VPC
 resource "aws_vpc" "pjk-vpc" {
