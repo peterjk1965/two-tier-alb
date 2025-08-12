@@ -44,17 +44,17 @@ resource "aws_lb_listener" "web_listener" {
 }
 
 
-resource "aws_lb_target_group_attachment" "web_server_1_attachment" {
-  target_group_arn = aws_lb_target_group.web_target_group.arn
-  target_id        = var.target_id_a
-  port             = 80
-}
+# resource "aws_lb_target_group_attachment" "web_server_1_attachment" {
+#   target_group_arn = aws_lb_target_group.web_target_group.arn
+#   target_id        = var.target_id_a
+#   port             = 80
+# }
 
-resource "aws_lb_target_group_attachment" "web_server_2_attachment" {
-  target_group_arn = aws_lb_target_group.web_target_group.arn
-  target_id        = var.target_id_b
-  port             = 80
-}
+# resource "aws_lb_target_group_attachment" "web_server_2_attachment" {
+#   target_group_arn = aws_lb_target_group.web_target_group.arn
+#   target_id        = var.target_id_b
+#   port             = 80
+# }
 
 # Output the Load Balancer DNS:
 output "load_balancer_dns" {
