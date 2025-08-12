@@ -7,11 +7,11 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "pjk-terraform-state-bucket"
+    bucket         = "pjk-terraform-state-bucket2"
     key            = "terraform.tfstate"
     region         = "us-east-2"
-    dynamodb_table = "terraform-lock-table"
     encrypt        = true
+    dynamodb_table = "terraform-lock-table"
   }
 }
 
