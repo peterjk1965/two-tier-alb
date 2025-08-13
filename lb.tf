@@ -43,74 +43,9 @@ resource "aws_lb_listener" "web_listener" {
   }
 }
 
-
-# resource "aws_lb_target_group_attachment" "web_server_1_attachment" {
-#   target_group_arn = aws_lb_target_group.web_target_group.arn
-#   target_id        = var.target_id_a
-#   port             = 80
-# }
-
-# resource "aws_lb_target_group_attachment" "web_server_2_attachment" {
-#   target_group_arn = aws_lb_target_group.web_target_group.arn
-#   target_id        = var.target_id_b
-#   port             = 80
-# }
-
 # Output the Load Balancer DNS:
 output "load_balancer_dns" {
   value = aws_lb.my_lb.dns_name
-}
-
-
-# Launch Template: Defines EC2 instance configuration
-resource "aws_launch_template" "example" {
-  name_prefix            = "example-"
-  image_id               = var.ec2-ami          # Your AMI ID variable
-  instance_type          = var.default-instance # Your instance type variable
-  vpc_security_group_ids = [aws_security_group.allow.id]
-
-  lifecycle {
-    create_before_destroy = true # Safe update strategy
-  }
-
-  tag_specifications {
-    resource_type = "instance"
-    tags = {
-      Name        = "web-server"
-      Environment = "dev"
-    }
-  }
-}
-
-
-# Auto Scaling Group: Uses the launch template to manage scaling
-resource "aws_autoscaling_group" "example_asg" {
-  name_prefix      = "web-asg-"
-  desired_capacity = 2
-  min_size         = 1
-  max_size         = 3
-
-  vpc_zone_identifier = [aws_subnet.public-subnet-a.id, aws_subnet.public-subnet-b.id]
-
-  launch_template {
-    id      = aws_launch_template.example.id
-    version = "$Latest"
-  }
-
-  health_check_type    = "EC2"
-  termination_policies = ["OldestInstance"]
-
-  tag {
-    key                 = "Name"
-    value               = "example-asg-instance"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Environment"
-    value               = "production"
-    propagate_at_launch = true
-  }
 }
 
 # Launch Template for EC2 instances
@@ -135,7 +70,7 @@ resource "aws_autoscaling_group" "web_asg" {
   desired_capacity          = 2
   max_size                  = 4
   min_size                  = 1
-  vpc_zone_identifier = [aws_subnet.public-subnet-a.id,aws_subnet.public-subnet-b.id]
+  vpc_zone_identifier       = [aws_subnet.public-subnet-a.id, aws_subnet.public-subnet-b.id]
   launch_template {
     id      = aws_launch_template.web.id
     version = "$Latest"
@@ -180,4 +115,3 @@ resource "aws_autoscaling_lifecycle_hook" "instance_launch" {
 }
 
 #add ASG
-
