@@ -51,13 +51,23 @@ output "load_balancer_dns" {
 # Launch Template for EC2 instances
 resource "aws_launch_template" "web" {
   name_prefix   = "web-lt-"
-  image_id      = var.ec2-ami   # Replace with your AMI
+  image_id      = var.ec2-ami # Replace with your AMI
   instance_type = var.default-instance
 
   network_interfaces {
     associate_public_ip_address = true
     security_groups             = [aws_security_group.lb_sg.id]
   }
+
+  user_data = base64encode(<<-EOF
+    #!/bin/bash
+    yum update -y
+    yum install httpd -y
+    echo "Instance A. This is a restricted system." > /var/www/html/index.html
+    systemctl start httpd
+    systemctl enable httpd
+    EOF
+  )
 
   lifecycle {
     create_before_destroy = true
@@ -66,11 +76,11 @@ resource "aws_launch_template" "web" {
 
 # Auto Scaling Group
 resource "aws_autoscaling_group" "web_asg" {
-  name                      = "web-asg"
-  desired_capacity          = 2
-  max_size                  = 4
-  min_size                  = 1
-  vpc_zone_identifier       = [aws_subnet.public-subnet-a.id, aws_subnet.public-subnet-b.id]
+  name                = "web-asg"
+  desired_capacity    = 2
+  max_size            = 4
+  min_size            = 1
+  vpc_zone_identifier = [aws_subnet.public-subnet-a.id, aws_subnet.public-subnet-b.id]
   launch_template {
     id      = aws_launch_template.web.id
     version = "$Latest"
