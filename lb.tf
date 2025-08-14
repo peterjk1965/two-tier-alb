@@ -1,6 +1,6 @@
 # Load Balancer with Correct Security Group and VPC
 resource "aws_lb" "my_lb" {
-  name               = "web-load-balancer"
+  name               = "pjk-main-lb"   # Updated name
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
@@ -9,7 +9,7 @@ resource "aws_lb" "my_lb" {
   enable_deletion_protection = false
 
   tags = {
-    Name = "WebLoadBalancer"
+    Name = "pjk-main-lb"
   }
 }
 
