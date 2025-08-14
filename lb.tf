@@ -60,6 +60,7 @@ resource "aws_launch_template" "web" {
     security_groups             = [aws_security_group.lb_sg.id]
   }
 
+# Output displays the local ip address of the instance getting the traffic
   user_data = base64encode(<<-EOF
 #!/bin/bash
 yum update -y
