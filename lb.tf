@@ -63,7 +63,8 @@ resource "aws_launch_template" "web" {
     #!/bin/bash
     yum update -y
     yum install httpd -y
-    echo "Instance A. This is a restricted system." > /var/www/html/index.html
+    LOCAL_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+    echo "This is a restricted system." > /var/www/html/index.html
     systemctl start httpd
     systemctl enable httpd
     EOF
