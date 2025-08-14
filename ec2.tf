@@ -1,5 +1,4 @@
 #A bastion host to provide easy access to the VPC. Not exactly "best practice", remove it it you wish.
-#Note, as log as the bastion is only accessible from your IP address, this method is still considered secure.
 
 resource "aws_instance" "bastion-host" {
   ami                    = var.ec2-ami
@@ -58,6 +57,7 @@ resource "aws_instance" "bastion-host" {
 #     Name = "public-instance-b"
 #   }
 # }
+
 
 # resource "aws_instance" "private-instance-a" {
 #   ami                    = var.ec2-ami
