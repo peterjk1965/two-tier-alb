@@ -13,12 +13,6 @@ variable "ec2-ami" {
   default = "ami-0169aa51f6faf20d5"
 }
 
-#moved to main.tf
-# variable "all-ipv4" {
-#   type    = string
-#   default = "0.0.0.0/0"
-# }
-
 variable "all-ipv4" {
   type        = string
   default     = "0.0.0.0/0"
@@ -30,21 +24,12 @@ variable "default-instance" {
   default = "t3.micro"
 }
 
-# variable "my-ipv4" {
-#   type    = string
-#   default = "24.1.237.243/32"
-# }
 
 variable "key-name" {
   type    = string
   default = "ohio"
 }
 
-#fix me
-# variable "bastion" {
-#   type    = string
-#   default = "10.0.1.193/32"
-# }
 
 variable "target_id_a" {
   description = "The ID of the target instance"
