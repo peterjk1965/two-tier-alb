@@ -107,6 +107,22 @@ resource "aws_security_group" "lb_sg" {
   description = "Allow inbound HTTP traffic to Load Balancer"
 
   ingress {
+    description = "SSH traffic"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [local.my_ip_cidr]
+  }
+
+  ingress {
+    description     = "SSH into private instance"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [aws_security_group.only-ssh-bastion.id]
+  }
+
+  ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"

@@ -10,7 +10,7 @@ variable "az-2" {
 
 variable "ec2-ami" {
   type    = string
-  default = "ami-0169aa51f6faf20d5"
+  default = "ami-05408afd665a9e1e0"
 }
 
 variable "all-ipv4" {
