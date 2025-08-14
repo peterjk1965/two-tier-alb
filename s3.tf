@@ -1,3 +1,4 @@
+#Uncomment all of this when first deploying.
 #comment out once infrastructure is operational
 
 # resource "aws_s3_bucket" "terraform_state2" {
@@ -37,5 +38,6 @@
 #     type = "S"
 #   }
 # }
+
 
 
