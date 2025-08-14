@@ -1,3 +1,6 @@
+#A bastion host to provide easy access to the VPC. Not exactly "best practice", remove it it you wish.
+#Note, as log as the bastion is only accessible from your IP address, this method is still considered secure.
+
 resource "aws_instance" "bastion-host" {
   ami                    = var.ec2-ami
   instance_type          = var.default-instance
@@ -12,7 +15,8 @@ resource "aws_instance" "bastion-host" {
 }
 
 
-
+#The origional Ec2 instances were replaced by a auto-scale group. I left these here just in case anyone still wanted a static instance
+#that was not part of any auto scale group, for whatever reason, perhaps as a Jenkins host, etc.
 # resource "aws_instance" "public-instance-a" {
 #   ami                    = var.ec2-ami
 #   instance_type          = var.default-instance
@@ -54,7 +58,6 @@ resource "aws_instance" "bastion-host" {
 #     Name = "public-instance-b"
 #   }
 # }
-
 
 # resource "aws_instance" "private-instance-a" {
 #   ami                    = var.ec2-ami
