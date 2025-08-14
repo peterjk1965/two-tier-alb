@@ -53,7 +53,7 @@ resource "aws_launch_template" "web" {
   name_prefix   = "web-lt-"
   image_id      = var.ec2-ami # Replace with your AMI
   instance_type = var.default-instance
-  key_name      = "ohio"  # Set here!
+  key_name      = "ohio" # Set here!
 
   network_interfaces {
     associate_public_ip_address = true
@@ -61,16 +61,23 @@ resource "aws_launch_template" "web" {
   }
 
   user_data = base64encode(<<-EOF
-    #!/bin/bash
-    yum update -y
-    yum install httpd -y
-    # Wait for network and metadata service
-    sleep 5
-    LOCAL_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
-    echo "This is a restricted system. Private IP: $LOCAL_IP" > /var/www/html/index.html
-    systemctl start httpd
-    systemctl enable httpd
-    EOF
+#!/bin/bash
+yum update -y
+yum install httpd -y
+
+# Get IMDSv2 token
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" \
+  -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+
+# Use token to get local IP
+LOCAL_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s \
+  http://169.254.169.254/latest/meta-data/local-ipv4)
+
+echo "This is a restricted system. Private IP: $LOCAL_IP" > /var/www/html/index.html
+
+systemctl start httpd
+systemctl enable httpd
+EOF
   )
 
   lifecycle {
