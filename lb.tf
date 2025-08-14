@@ -1,6 +1,6 @@
 # Load Balancer with Correct Security Group and VPC
 resource "aws_lb" "my_lb" {
-  name               = "pjk-main-lb"   # Updated name
+  name               = "pjk-main-lb" # Updated name
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
@@ -53,6 +53,7 @@ resource "aws_launch_template" "web" {
   name_prefix   = "web-lt-"
   image_id      = var.ec2-ami # Replace with your AMI
   instance_type = var.default-instance
+  key_name      = "ohio"  # Set here!
 
   network_interfaces {
     associate_public_ip_address = true
