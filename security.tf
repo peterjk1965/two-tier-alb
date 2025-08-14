@@ -121,6 +121,6 @@ resource "aws_security_group" "lb_sg" {
   }
 
   tags = {
-    Name = "LoadBalancerSecurityGroup"
+    Name = "lb-securitygroup"
   }
 }
