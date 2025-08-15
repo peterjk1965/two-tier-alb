@@ -1,0 +1,44 @@
+Current png exportable diagram is below in Marmaid format:
+To render, go to https://www.mermaidchart.com
+Then export to png.
+
+```mermaid
+flowchart TD
+    VPC["VPC: 10.0.0.0/16"]
+    IGW["Internet Gateway"]
+    NAT["NAT Gateway"]
+    PUB_A["Public Subnet A<br/>10.0.1.0/24"]
+    PUB_B["Public Subnet B<br/>10.0.2.0/24"]
+    PRIV_A["Private Subnet A<br/>10.0.3.0/24"]
+    PRIV_B["Private Subnet B<br/>10.0.4.0/24"]
+    Bastion["Bastion Host"]
+    ALB["Application Load Balancer"]
+    ASG["Auto Scaling Group<br/>Web EC2s"]
+    EC2A["EC2<br/>Private Subnet A<br/>8080"]
+    EC2B["EC2<br/>Private Subnet B<br/>8080"]
+
+    VPC --- IGW
+    VPC --- NAT
+    VPC --- PUB_A
+    VPC --- PUB_B
+    VPC --- PRIV_A
+    VPC --- PRIV_B
+
+    PUB_A --- Bastion
+    PUB_A --- ALB
+    PUB_B --- ALB
+    ALB --> ASG
+    ALB --> EC2A
+    ALB --> EC2B
+
+    PUB_A -- Route Table --> IGW
+    PRIV_A -- Route Table --> NAT
+    PRIV_B -- Route Table --> NAT
+
+    ASG --- PUB_A
+    ASG --- PUB_B
+    EC2A --- PRIV_A
+    EC2B --- PRIV_B
+```
+
+
